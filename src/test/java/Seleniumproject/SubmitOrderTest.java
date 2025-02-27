@@ -26,20 +26,17 @@ public class SubmitOrderTest {
 	 WebDriver driver = new ChromeDriver();
 	 driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 	 driver.manage().window().maximize();
+	 WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
 	 driver.get("https://rahulshettyacademy.com/client");
-	 
 	 Landingpage lpage= new Landingpage(driver);
 	 lpage.goTo();
 	 lpage.loginApplication("vinitg@gmail.com", "Vinit@123");
 	 ProductCatalogue pc = new ProductCatalogue(driver);
 	 List<WebElement> products = pc.getProductList();
 	 pc.addProductToCart(productName);
+	  
 	 
 
-		
-		
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#toast-container")));
-		wait.until(ExpectedConditions.invisibilityOf(driver.findElement(By.cssSelector(".ng-animating"))));
 		
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[routerlink*='cart']")));
 		driver.findElement(By.cssSelector("[routerlink*='cart']")).click();
