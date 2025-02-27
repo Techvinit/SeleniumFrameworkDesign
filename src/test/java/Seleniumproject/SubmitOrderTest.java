@@ -13,6 +13,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import Seleniumproject.pageobjects.Landingpage;
+import Seleniumproject.pageobjects.ProductCatalogue;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class SubmitOrderTest {
@@ -30,17 +31,11 @@ public class SubmitOrderTest {
 	 Landingpage lpage= new Landingpage(driver);
 	 lpage.goTo();
 	 lpage.loginApplication("vinitg@gmail.com", "Vinit@123");
+	 ProductCatalogue pc = new ProductCatalogue(driver);
+	 List<WebElement> products = pc.getProductList();
+	 pc.addProductToCart(productName);
 	 
-	 WebDriverWait wait= new WebDriverWait(driver, Duration.ofSeconds(5));
-	 
-	 wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".mb-3")));
-	 List<WebElement> products = driver.findElements(By.cssSelector(".mb-3"));
-	 
-	 
-	 
-	 WebElement prod = products.stream().filter(product-> product.findElement(By.cssSelector("b")).getText().equals(productName)).findFirst().orElse(null);
-	 	
-		prod.findElement(By.cssSelector(".card-body button:last-of-type")).click();
+
 		
 		
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#toast-container")));
