@@ -32,7 +32,7 @@ public class AbstractComponent {
 	
 	public void goToCartPage() {
 		
-		driver.findElement(By.cssSelector("[routerlink*='cart']")).click();
+		cartHeader.click();
 	}
 	
 	public void waitForElementToDissapear(WebElement ele) {
