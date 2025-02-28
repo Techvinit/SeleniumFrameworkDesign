@@ -34,12 +34,10 @@ public class SubmitOrderTest {
 	 ProductCatalogue pc = new ProductCatalogue(driver);
 	 List<WebElement> products = pc.getProductList();
 	 pc.addProductToCart(productName);
+	 pc.goToCartPage();
 	  
 	 
 
-		
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[routerlink*='cart']")));
-		driver.findElement(By.cssSelector("[routerlink*='cart']")).click();
 		
 		List<WebElement> cartproducts=driver.findElements(By.xpath("//div[@class='cartSection']//h3"));
 		
