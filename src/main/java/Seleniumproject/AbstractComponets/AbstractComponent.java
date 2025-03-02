@@ -10,6 +10,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import Seleniumproject.pageobjects.CartPage;
+
 public class AbstractComponent {
 	
 	WebDriver driver;
@@ -30,9 +32,11 @@ public class AbstractComponent {
        
 	}
 	
-	public void goToCartPage() {
+	public CartPage goToCartPage() {
 		
 		cartHeader.click();
+		CartPage cp = new CartPage(driver);
+		return cp;
 	}
 	
 	public void waitForElementToDissapear(WebElement ele) {
