@@ -12,6 +12,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
+import Seleniumproject.pageobjects.CartPage;
+import Seleniumproject.pageobjects.CheckoutPage;
+import Seleniumproject.pageobjects.ConfirmationPage;
 import Seleniumproject.pageobjects.Landingpage;
 import Seleniumproject.pageobjects.ProductCatalogue;
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -30,33 +33,23 @@ public class SubmitOrderTest {
 	 driver.get("https://rahulshettyacademy.com/client");
 	 Landingpage lpage= new Landingpage(driver);
 	 lpage.goTo();
-	 lpage.loginApplication("vinitg@gmail.com", "Vinit@123");
-	 ProductCatalogue pc = new ProductCatalogue(driver);
+	 ProductCatalogue pc = lpage.loginApplication("vinitg@gmail.com", "Vinit@123");
+	
 	 List<WebElement> products = pc.getProductList();
 	 pc.addProductToCart(productName);
-	 pc.goToCartPage();
-	  
+	 CartPage cp = pc.goToCartPage();
 	 
-
+	 Boolean match = cp.verifyProductDisplay(productName);
+	 Assert.assertTrue(match);
+	CheckoutPage checkoutp = cp.goToCheckout(); 
+	checkoutp.selectCountry("india");
+	ConfirmationPage confirmpage= checkoutp.submitOrder();
+	String message = confirmpage.getConfirmationMessage();
+	Assert.assertTrue(message.equalsIgnoreCase("Thankyou for the order."));
+	driver.close();
 		
-		List<WebElement> cartproducts=driver.findElements(By.xpath("//div[@class='cartSection']//h3"));
 		
-		Boolean match = cartproducts.stream().anyMatch(cartproduct-> cartproduct.getText().equalsIgnoreCase(productName));
-		Assert.assertTrue(match);
-	
-		driver.findElement(By.cssSelector(".totalRow button")).click();
 		
-		Actions a = new Actions(driver);
-		a.sendKeys(driver.findElement(By.cssSelector("[placeholder='Select Country']")), "india").build().perform();
-		
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".ta-results")));
-		driver.findElement(By.cssSelector(".ta-item:nth-of-type(2)")).click();
-		driver.findElement(By.cssSelector(".action__submit")).click();
-		
-		Boolean b = driver.findElement(By.cssSelector(".hero-primary")).getText().equalsIgnoreCase("Thankyou for the order.");
-		
-		Assert.assertTrue(b);
-		driver.close();
 		
 	}
 
