@@ -22,7 +22,7 @@ import Seleniumproject.pageobjects.Landingpage;
 import Seleniumproject.pageobjects.ProductCatalogue;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
-public class SubmitOrderTest extends BaseTest {
+public class ErrorValidations extends BaseTest {
 
 	//WebDriver driver;
 	@Test
@@ -30,22 +30,11 @@ public class SubmitOrderTest extends BaseTest {
 	
 	  {
 		// TODO Auto-generated method stub
-     String productName= "ZARA COAT 3";
+     //String productName= "ZARA COAT 3";
     
-	 ProductCatalogue pc = lpage.loginApplication("vinitg@gmail.com", "Vinit@123");
-	
-	 List<WebElement> products = pc.getProductList();
-	 pc.addProductToCart(productName);
-	 CartPage cp = pc.goToCartPage();
+	 lpage.loginApplication("vinitg@gmail.com", "Vinit@123");
+	 Assert.assertEquals("Incorrect email or password.", lpage.getErrorMessage());
 	 
-	 Boolean match = cp.verifyProductDisplay(productName);
-	 Assert.assertTrue(match);
-	CheckoutPage checkoutp = cp.goToCheckout(); 
-	checkoutp.selectCountry("india");
-	ConfirmationPage confirmpage= checkoutp.submitOrder();
-	String message = confirmpage.getConfirmationMessage();
-	Assert.assertTrue(message.equalsIgnoreCase("Thankyou for the order."));
-			
 	}
 
 }

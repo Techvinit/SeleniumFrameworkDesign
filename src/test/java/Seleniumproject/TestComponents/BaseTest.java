@@ -8,13 +8,17 @@ import java.util.Properties;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 
 import Seleniumproject.pageobjects.Landingpage;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class BaseTest {
 	
-	 WebDriver driver;
+	
+	public WebDriver driver;
+	public Landingpage lpage;
 	
 	public WebDriver initializeDriver() throws IOException {
 		
@@ -40,13 +44,19 @@ public class BaseTest {
 		  
 	}
 	
+	@BeforeMethod
 	public Landingpage launchApplication() throws IOException {
 		
 		driver = initializeDriver();
-		Landingpage lpage= new Landingpage(driver);
+	    lpage= new Landingpage(driver);
 		lpage.goTo();
 		return lpage;
 		
+	}
+	@AfterMethod
+	public void teardown() {
+		
+		driver.close();
 	}
 	
 }
